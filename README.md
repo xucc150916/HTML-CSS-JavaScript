@@ -1,2 +1,6 @@
 前端学习
-HTML，CSS，JavaScript
+
+
+HTML：超文本标记语言，静态语言。网页的载体
+CSS：样式的表现。网页的外衣
+JavaScript：实现网页的特效，动态效果
