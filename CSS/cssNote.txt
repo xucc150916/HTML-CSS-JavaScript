@@ -9,9 +9,9 @@ CSS即层叠样式表
 	
 CSS样式基础语法
 	Selector {	
-				property:value;
-				...
-				}
+		property:value;
+		...
+	}
 	选择器   属性以及属性值
 	选择器可以为多个，多个选择器对应的多个属性组在{}内用';'分号隔开
 	
