@@ -1,0 +1,124 @@
+JavaScript：基于对象的编程语言(可以有对象也可以没有)
+	
+	JavaScript组成
+		语言核心(ECMAScript)
+		文档对象模型(DOM)
+		浏览器窗口模型(BOM)
+		
+	json：一系列的k-v键值对格式化信息，替代了xml
+	
+	JavaScript在HTML中的用法：
+		1. 直接在HTML页面中插入js代码
+			<head>中使用<script>
+			<body>中使用<script>
+		2. 包含外部JavaScript文件
+			<head>中的<script src="外部js文件地址">
+		建议使用外部js文件
+			可维护性好
+			可缓存：浏览器可根据设置缓存所有的外部js文件，可以加快加载页面的速度
+			适应未来变化
+	
+	<noscript>元素：
+		解决某些浏览器不支持JavaScript脚本会报错的情况，在以下两种情况下，<noscript>中的元素就会显示出来：
+			浏览器不支持js脚本
+			浏览器支持脚本，但是js被禁用
+		
+		除了上述两种情况，浏览器不会呈现noscript中的内容
+	
+	js基本语法
+		1. js是一门弱类型的脚本语言(不需要声明类型)，使用var定义变量，会根据运行时具体的类型而改变
+			js还是一门纯解释性语言，没有编译器只有解释器
+		2. 区分大小写
+		3. 注释 // 单行注释 /* 块级注释，多行注释 */
+		4. 严格模式
+			ECMAScript5定义了严格模式
+			a. 整个文件启用严格模式，在顶端写 "use strict"; 
+			b. 在函数中启用严格模式，在函数内写 "use strict"; 
+			在严格模式下，js的执行结构会有很大不同
+		5. js语句结束可以不加 ";"，但是建议加上
+	
+	js关键字与保留字
+		变量声明而为初始化，值为undefined
+		在函数中用var定义的变量为函数体内的局部变量，函数结束后自动协会。但是，在函数中不加var声明的变量为全局变量，函数销毁后也存在
+		只有在方法体中var声明的变量才是局部变量
+		一条语句可以定义多个变量，使用","分隔
+	
+	
+	数据类型
+		基本数据类型：Undefined(未赋值)，Null(空) -> Object，Boolean(布尔)，Number(数字)，String(字符串)
+		引用数据类型：Object(本质是有一组无序的键值对组成)
+			var obj {
+				a:100
+			};  // 键值对
+		
+		JavaScript变量均为对象，声明一个变量时，就创建一个新的对象
+		
+		typeof操作符：
+			由于js是弱类型，所以可以使用typeof检测给定变量的数据类型：
+				"undifined"：如果这个变量未定义，或者定义之后未赋值
+				"boolean"：变量值为布尔类型
+				"String"：变量为字符串
+				"Number"：变量为数值类型
+				"Object"：变量为对象或者为Null
+				"Function"：变量值为函数
+		
+		Undefined类型：
+			只有一个值，即undefined，在使用var声明变量但未对其初始化时(或者显示声明其为undefined)
+		
+		Null类型
+			Null类型也只有一个值为null，null表示一个空对象指针(这就是用typeof检测null返回Object的原因)
+			实际上，undefined就是派生自null，即：
+				undifined==null => true
+		
+		Boolean类型：
+			Boolean只有两个值，true/false
+			ECMAScript规定，js中所有类型的值都可以通过转型函数Boolean()转换为Boolean类型，转换规则如下：
+				           true           false
+				String    非空字符串     空字符串
+				Number    非零数值       0/NaN
+				Object    任何对象       null
+				Undefined n/a            undifined
+			控制流语句(if/while...)中自动采用上述转换规则将值转换为对应的boolean值
+	
+		Number类型
+			js中定义常用的数值类型有整数和浮点数，其中数值字面量格式包含八进制十进制还有十六进制
+			八进制以0开始，如果其值超过7，将去掉，将其看待为十进制。严格模式下不鸟八进制，报错
+			浮点数：数值中包含小数点，并且小数点之后必须有一位数，前面可以没有整数(例如 .1)
+				可以使用科学计数法进行超大超小数的表示，使用e代表10的几次方(10e2 => 100)
+				默认情况下，会将小数点后6个以上的自动转换为科学计数法
+				
+			Number最大数保存在Number.MAX_VALUE最小数保存在Number.MIN_VALUE中，超出范围时，最小值为-Infinity，最大为Infinity
+				可以使用isInfinite()检测当前变量是否在保存范围之内
+				正无穷(Infinity)存放在Number.NEGATIVE_INFINITY中，负无穷(-Infinity)存放在Number.POSITIVE_INFINITY中
+			
+			NaN成为非数值，表示一个本来要返回数值的操作数未返回数值的情况
+				任何涉及到NaN的操作(与NaN进行数值操作)，都会返回NaN
+				NaN与任何数都不相等，包括它自己
+				isNaN():
+					任何不能转换为Number的都会返回为true
+				
+			数值转换函数：
+				Number()：可用于任何数据类型
+				ParesInt(" ", n)：用于字符串转为n进制的数值(默认为10进制)
+				ParesFloat(" ")：
+					字符串中第一个小数点有效，第二个小数点无效
+					只解析十进制值，不能指定进制
+					字符串可以解析整数，返回整数
+		
+		String类型
+			String可以用双引号也可以用单引号，没有什么区别
+			字符字面量
+			转换为字符串
+				任何对象的toString()，但是undefined和null没有toString()。toString()也可以接收参数，接收一个进制基数
+				使用String(任何数值)，本质是如果接收的数值存在toString，则调用，如果是undefined和null，则返回字符串的undefined和null
+				
+		Object类型
+			constructor
+				
+	JavaScript操作符
+		一元操作符
+		!! == Boolean：两个非操作符连用等于调用一个Boolean操作符
+		逻辑与：&&，短路与
+				
+				
+				
